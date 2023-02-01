@@ -1,6 +1,6 @@
-from version import __version__
-from setuptools import setup
+"""Setup file for application."""
 from setuptools import find_packages, setup
+from version import __version__
 
 setup(
     name='hello_world',
