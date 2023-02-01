@@ -1,11 +1,20 @@
-FROM public.ecr.aws/docker/library/python:3.8.16-slim
+FROM public.ecr.aws/docker/library/python:3.8-slim-buster
 
-WORKDIR /code
+WORKDIR /app
 
-COPY ./requirements.txt /code/requirements.txt
+# Install required packages
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+# Copy the application code
+COPY . .
 
-COPY ./app.py /code
+# Create a non-root user to run the application
+RUN useradd --create-home appuser
+USER appuser
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port", "8080"]
+# Expose the 8080 Flask port
+EXPOSE 8080
+
+# Start the application
+CMD ["python", "app.py"]
