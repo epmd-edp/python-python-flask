@@ -1,5 +1,5 @@
 from flask import Flask
-"""Example of flsh main file."""
+"""Example of flask main file."""
 app = Flask(__name__)
 
 @app.route('/')
